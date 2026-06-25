@@ -1,6 +1,15 @@
 pub fn longest_word(sentence: &str) -> Option<&str> {
-    let _ = sentence;
-    todo!("implement longest_word")
+    let mut best = None;
+    let mut best_len = 0usize;
+
+    for word in sentence.split_whitespace() {
+        if word.len() > best_len {
+            best = Some(word);
+            best_len = word.len();
+        }
+    }
+
+    best
 }
 
 #[cfg(test)]

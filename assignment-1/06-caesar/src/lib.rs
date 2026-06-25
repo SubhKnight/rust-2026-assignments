@@ -1,8 +1,29 @@
 pub const ALPHABET: &str = "abcdefghijklmnopqrstuvwxyz";
 
 pub fn caesar(input: &str, shift: i32) -> String {
-    let _ = (input, shift);
-    todo!("implement caesar")
+    let alphabet_len = ALPHABET.len();
+    let mut output = String::new();
+
+    for ch in input.chars() {
+        if let Some(lower) = ch.to_lowercase().next() {
+            if lower.is_ascii_lowercase() {
+                let idx = lower as usize - b'a' as usize;
+                let shifted = (idx as i32 + shift).rem_euclid(alphabet_len as i32) as usize;
+                let shifted_char = ALPHABET.as_bytes()[shifted] as char;
+                if ch.is_ascii_uppercase() {
+                    output.push(shifted_char.to_ascii_uppercase());
+                } else {
+                    output.push(shifted_char);
+                }
+            } else {
+                output.push(ch);
+            }
+        } else {
+            output.push(ch);
+        }
+    }
+
+    output
 }
 
 #[cfg(test)]
